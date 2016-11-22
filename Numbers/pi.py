@@ -1,21 +1,14 @@
-import sys, math
+from decimal import *
 
-def pi_N(N):
-    i = 1
-    pi = 0.0
-    try:
-        while(i < N):
-            curr_sum = (1.0/(math.pow(16,i))*((4.0/(8*i+1))-(2.0/(8*i+4))-(1.0/(8*i+5))-(1.0/(8*i+6))))
-            pi += 16 * curr_sum
-            print pi
-            i += 1
-    except TypeError:
-        print "Please enter an integer as an argument!"
-        return
 
-if __name__ == "__main__":
-    try:
-        pi_N(sys.argv[1])
-
-    except IndexError:
-        print "Please enter an integer as an argument."
+def piN(N):
+    if not isinstance(N, int) or N < 0: return
+    pi = Decimal(0)
+    for i in xrange(0, N):
+        term1 = Decimal(1) / Decimal(pow(16, i))
+        term2 = Decimal(4) / Decimal(8 * i + 1)
+        term3 = Decimal(2) / Decimal(8 * i + 4)
+        term4 = Decimal(1) / Decimal(8 * i + 5)
+        term5 = Decimal(1) / Decimal(8 * i + 6)
+        pi = pi + term1 * (term2 - term3 - term4 - term5)
+    return pi.__float__()
